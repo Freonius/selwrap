@@ -1,6 +1,6 @@
 {
   "name": "selwrap",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A wrapper for selenium-webdriver",
   "main": "index.js",
   "scripts": {
@@ -9,10 +9,14 @@
   "author": "Federico Pirani",
   "license": "MIT",
   "dependencies": {
+    "pg": "^8.11.3",
     "selenium-webdriver": "^4.14.0",
     "winston": "^3.11.0"
   },
   "devDependencies": {
+    "eslint": "^8.51.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.1",
     "geckodriver": "^4.2.1"
   }
 }

@@ -26,7 +26,7 @@ const logFolder = (() => {
     fld = process.env.LOG_FOLDER.trim();
   }
   if (!path.isAbsolute(fld)) {
-    fld = path.join(__dirname, fld);
+    fld = path.join(process.cwd(), fld);
   }
   if (!fs.existsSync(fld)) {
     fs.mkdirSync(fld);
@@ -46,7 +46,7 @@ const screenshotFolder = (() => {
     fld = process.env.SCREENSHOT_FOLDER.trim();
   }
   if (!path.isAbsolute(fld)) {
-    fld = path.join(__dirname, fld);
+    fld = path.join(process.cwd(), fld);
   }
   if (!fs.existsSync(fld)) {
     fs.mkdirSync(fld);

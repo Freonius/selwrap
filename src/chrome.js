@@ -12,7 +12,9 @@ const waitUntilChromeIsReady = async (i = 0) => {
   i++;
   try {
     await fetch('http://localhost:9222/json');
+    log.debug('Chrome is ready');
   } catch (e) {
+    log.error(e);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     await waitUntilChromeIsReady(i);
   }
@@ -25,14 +27,18 @@ const waitUntilChromeIsReady = async (i = 0) => {
  * @returns { Promise<WebDriver> }
  */
 const getDriver = async (userAgent, devMode = null) => {
+  let isDevLocal = isDev;
+  if (devMode === true) {
+    isDevLocal = true;
+  }
   log.info('Creating Chrome driver');
-  if (isDev) {
+  if (isDevLocal) {
     log.info('Running in dev mode');
   } else {
     log.info('Running in prod mode');
   }
   const opt = new Options();
-  if (!isDev || devMode === false) {
+  if (!isDevLocal) {
     opt.addArguments('--headless');
     opt.addArguments('--disable-dev-shm-usage');
     opt.addArguments('--window-size=1920,1080');
@@ -72,8 +78,8 @@ const getDriver = async (userAgent, devMode = null) => {
     .forBrowser('chrome')
     .setChromeOptions(opt)
     .build();
-  if (isDev === false || devMode === false) {
-    await waitUntilChromeIsReady();
+  if (!isDevLocal) {
+    // await waitUntilChromeIsReady();
   }
   log.info('Chrome driver created');
   return driver;
