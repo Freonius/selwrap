@@ -22,7 +22,7 @@ const takeScreenshot = async (driver, filename = null) => {
     filename = new Date().toISOString().replace(/[^0-9]/g, '');
   }
   const binaryData = Buffer.from(await driver.takeScreenshot(), 'base64');
-  fullPath = `${screenshotFolder}${filename}.png`;
+  const fullPath = `${screenshotFolder}${filename}.png`;
   fs.writeFileSync(fullPath, binaryData);
 };
 

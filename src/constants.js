@@ -7,9 +7,9 @@ const fs = require('fs');
  */
 const isDev = (() => {
   if (
-    process.env.hasOwnProperty('NODE_ENV') &&
+    Object.prototype.hasOwnProperty.call(process.env, 'NODE_ENV') &&
     ['development', 'dev', 'debug'].includes(
-      process.env.NODE_ENV.trim().toLowerCase()
+      process.env.NODE_ENV.trim().toLowerCase(),
     )
   ) {
     return true;
@@ -20,8 +20,8 @@ const isDev = (() => {
 const logFolder = (() => {
   let fld = 'logs';
   if (
-    process.env.hasOwnProperty('LOG_FOLDER') &&
-    process.env.LOG_FOLDER.trim() != ''
+    Object.prototype.hasOwnProperty.call(process.env, 'LOG_FOLDER') &&
+    process.env.LOG_FOLDER.trim() !== ''
   ) {
     fld = process.env.LOG_FOLDER.trim();
   }
@@ -40,8 +40,8 @@ const logFolder = (() => {
 const screenshotFolder = (() => {
   let fld = 'screenshots';
   if (
-    process.env.hasOwnProperty('SCREENSHOT_FOLDER') &&
-    process.env.SCREENSHOT_FOLDER.trim() != ''
+    Object.prototype.hasOwnProperty.call(process.env, 'SCREENSHOT_FOLDER') &&
+    process.env.SCREENSHOT_FOLDER.trim() !== ''
   ) {
     fld = process.env.SCREENSHOT_FOLDER.trim();
   }

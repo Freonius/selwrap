@@ -2,31 +2,43 @@ const { Pool } = require('pg');
 const process = require('process');
 
 /**
- * @param {{user: string?, host: string?, database: string?, password: string?, port: number?}} options
+ * @param { { user: string?,
+ *            host: string?,
+ *            database: string?,
+ *            password: string?,
+ *            port: number?} } options
  * @returns { Pool }
  */
 const getConnection = (
-  { user, host, database, password, port } = {
+  {
+    user, host, database, password, port,
+  } = {
     user: null,
     host: null,
     database: null,
     password: null,
     port: null,
-  }
+  },
 ) => {
-  if (!user && process.env.hasOwnProperty('DB_USER')) {
+  if (!user && Object.prototype.hasOwnProperty.call(process.env, 'DB_USER')) {
     user = process.env.DB_USER;
   }
-  if (!database && process.env.hasOwnProperty('DB_DATABASE')) {
+  if (
+    !database &&
+    Object.prototype.hasOwnProperty.call(process.env, 'DB_DATABASE')
+  ) {
     database = process.env.DB_DATABASE;
   }
-  if (!password && process.env.hasOwnProperty('DB_PASSWORD')) {
+  if (
+    !password &&
+    Object.prototype.hasOwnProperty.call(process.env, 'DB_PASSWORD')
+  ) {
     password = process.env.DB_PASSWORD;
   }
-  if (!port && process.env.hasOwnProperty('DB_PORT')) {
+  if (!port && Object.prototype.hasOwnProperty.call(process.env, 'DB_PORT')) {
     port = Number.parseInt(process.env.DB_PORT, 10);
   }
-  if (!host && process.env.hasOwnProperty('DB_HOST')) {
+  if (!host && Object.prototype.hasOwnProperty.call(process.env, 'DB_HOST')) {
     host = process.env.DB_HOST;
   }
   const options = {

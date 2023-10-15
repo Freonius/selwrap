@@ -10,5 +10,7 @@ module.exports = {
   },
   rules: {
     'no-await-in-loop': 'off',
+    'operator-linebreak': 'off',
+    'no-param-reassign': 'off',
   },
 };

@@ -1,5 +1,8 @@
 const process = require('process');
-const { WebDriver, Builder } = require('selenium-webdriver');
+/**
+ * @typedef {import('selenium-webdriver').WebDriver} WebDriver
+ */
+const { Builder } = require('selenium-webdriver');
 const { Options } = require('selenium-webdriver/firefox');
 const { isDev } = require('./constants');
 const log = require('./log');
@@ -37,26 +40,26 @@ const getDriver = async (userAgent, devMode = null) => {
     opt.addArguments('--disable-dev-tools');
     opt.addArguments('--disable-popup-blocking');
     opt.addArguments('--no-zygote');
-    if (process.env.hasOwnProperty('PROXY_SERVER')) {
+    if (Object.prototype.hasOwnProperty.call(process.env, 'PROXY_SERVER')) {
       const proxyServers = process.env.PROXY_SERVER.trim().split(',');
+      /* eslint-disable operator-linebreak */
       const proxyServer =
         proxyServers[randomInteger(0, proxyServers.length - 1)];
+      /* eslint-enable operator-linebreak */
       opt.addArguments(`--proxy-server=${proxyServer}`);
     } else {
       opt.addArguments("--proxy-server='direct://'");
       opt.addArguments('--proxy-bypass-list=*');
     }
-
-    opt.addArguments('--remote-debugging-port=9222');
   }
-  if (process.env.hasOwnProperty('FIREFOX_PATH')) {
+  if (Object.prototype.hasOwnProperty.call(process.env, 'FIREFOX_PATH')) {
     opt.setBinary(process.env.FIREFOX_PATH);
   }
   if (userAgent) {
     opt.addArguments(`--user-agent=${userAgent}`);
   } else {
     opt.addArguments(
-      '--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'
+      '--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
     );
   }
   const driver = await new Builder()

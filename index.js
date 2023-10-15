@@ -1,5 +1,7 @@
-const { WebDriver, By } = require('selenium-webdriver');
-const { Pool } = require('pg');
+/**
+ * @typedef {import('selenium-webdriver').WebDriver} WebDriver
+ * @typedef {import('pg').Pool} Pool
+ */
 const {
   chrome,
   log,
@@ -27,14 +29,22 @@ const {
  */
 
 /**
- * @param { ('firefox'| 'chrome') } browser
+ * @param { ('firefox'|'chrome') } browser
  * @param { wrapperCallback } callback
- * @param { { devMode: boolean?, userAgent: string?, user: string?, host: string?, database: string?, password: string?, port: number?} } options
+ * @param { { devMode: boolean?,
+ *            userAgent: string?,
+ *            user: string?,
+ *            host: string?,
+ *            database: string?,
+ *            password: string?,
+ *            port: number?} } options
  */
 function selenium(
   browser,
   callback,
-  { devMode, userAgent, user, host, database, password, port } = {
+  {
+    devMode, userAgent, user, host, database, password, port,
+  } = {
     devMode: null,
     userAgent: null,
     user: null,
@@ -42,24 +52,33 @@ function selenium(
     database: null,
     password: null,
     port: null,
-  }
+  },
 ) {
   browser = browser.toLowerCase().trim();
+  if (['chrome', 'firefox'].indexOf(browser) === -1) {
+    throw new Error('Invalid browser');
+  }
   /**
    * @type { creatorCallback }
    */
-  let creator = chrome;
+  let creator = firefox;
   /**
    * @type { Pool? }
    */
   let connection = null;
   try {
-    connection = getConnection({ host, user, database, password, port });
+    connection = getConnection({
+      host,
+      user,
+      database,
+      password,
+      port,
+    });
   } catch (error) {
     log.error(error);
   }
-  if (browser === 'firefox') {
-    creator = firefox;
+  if (browser === 'chrome') {
+    creator = chrome;
   }
   const internalWrapper = async () => {
     const driver = await creator(userAgent, devMode);
