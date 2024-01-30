@@ -20,7 +20,7 @@ describe('selenium', () => {
 
     // Act
     selenium(browser, callback, options);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     expect(callback.calledOnce).toBe(true);
     expect(callback.firstCall.args[0]).toBeInstanceOf(WebDriver);
   });

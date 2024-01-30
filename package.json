@@ -9,7 +9,8 @@
   },
   "homepage": "https://github.com/Freonius/selwrap",
   "scripts": {
-    "test": "jest"
+    "test": "jest --coverage",
+    "lint": "eslint ."
   },
   "author": "Federico Pirani",
   "readme": "README.md",
